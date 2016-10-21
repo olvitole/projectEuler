@@ -33,23 +33,23 @@ public class FourtyOne {
 		output = new ArrayList<String>();
 
 		usableNumbers = "1";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "12";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "123";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "1234";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "12345";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "123456";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "1234567";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "12345678";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		usableNumbers = "123456789";
-		output.addAll(permutations(usableNumbers));
+		output.addAll(h.permutations(usableNumbers));
 		// h.permute(usableNumbers.length(), "", output, usableNumbers);
 		System.out.println(output);
 
@@ -63,20 +63,5 @@ public class FourtyOne {
 
 		System.out.println("Answer" + maxPrime);
 
-	}
-
-	private static List<String> permutations(String s) {
-		List<String> combinations = new ArrayList<String>();
-		if (s.length() == 1) {
-			combinations.add(s);
-		} else {
-			for (int i = 0; i < s.length(); i++) {
-				List<String> temp = permutations(s.substring(0, i) + s.substring(i + 1));
-				for (String string : temp) {
-					combinations.add(s.charAt(i) + string);
-				}
-			}
-		}
-		return combinations;
 	}
 }
