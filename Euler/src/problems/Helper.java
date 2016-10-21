@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ public class Helper {
 
 	private static final BigDecimal ZERO_BIG_DECIMAL = new BigDecimal("0.00");
 	private static final BigDecimal ONE_BIG_DECIMAL = new BigDecimal("1");
+	
 
 	/**
 	 * @deprecated replaced by isPrimePro
@@ -377,6 +379,28 @@ public class Helper {
 		return newString;
 	}
 
+	// revice cleanup
+	public boolean isPandigital(String string, String usableNumbers) {
+		if (string.length() == usableNumbers.length() && !string.contains("0")) {
+			boolean[] b = new boolean[usableNumbers.length()];
+			for (char c : string.toCharArray()) {
+				b[Integer.parseInt(c + "") - 1] = true;
+			}
+			return !(Arrays.toString(b)).contains("false");
+		}
+		return false;
+	}
+
+	public void permute(int level, String prefix, ArrayList<Integer> populate, String usableNumbers) {
+		// note for our problem we can exclude the ones that contain repeat
+		// numbers even though they will be filtered later on
+		if (level == 0) {
+			populate.add(Integer.parseInt(prefix));
+			return;
+		}
+		for (int i = 0; i < usableNumbers.length(); i++)
+			permute(level - 1, prefix + usableNumbers.charAt(i), populate, usableNumbers);
+	}
 }
 
 // 2790139313751

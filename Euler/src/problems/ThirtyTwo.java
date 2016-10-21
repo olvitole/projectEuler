@@ -15,8 +15,8 @@ public class ThirtyTwo {
 	private static ArrayList<Integer> twoDigits;
 	private static ArrayList<Integer> threeDigits;
 	private static ArrayList<Integer> fourDigits;
-
-	private static String source = "123456789";
+	
+	private static String usableNumbers = "123456789";
 
 	/**
 	 * Problem 32
@@ -52,15 +52,17 @@ public class ThirtyTwo {
 		oneDigit.add(7);
 		oneDigit.add(8);
 		oneDigit.add(9);
+		
+		Helper h = new Helper();
 
 		twoDigits = new ArrayList<Integer>();
-		permute(2, "", twoDigits);
+		h.permute(2, "", twoDigits, usableNumbers);
 
 		threeDigits = new ArrayList<Integer>();
-		permute(3, "", threeDigits);
+		h.permute(3, "", threeDigits, usableNumbers);
 
 		fourDigits = new ArrayList<Integer>();
-		permute(4, "", fourDigits);
+		h.permute(4, "", fourDigits, usableNumbers);
 
 		HashSet<Integer> results = new HashSet<Integer>();
 
@@ -76,7 +78,7 @@ public class ThirtyTwo {
 			for (Integer three : threeDigits) {
 				int mult = two * three;
 				String eval = "" + mult + two + three;
-				if (isPandigital(eval)) {
+				if (h.isPandigital(eval, usableNumbers)) {
 					System.out.println(eval);
 					results.add(mult);
 				}
@@ -87,7 +89,7 @@ public class ThirtyTwo {
 			for (Integer three : fourDigits) {
 				int mult = two * three;
 				String eval = "" + mult + two + three;
-				if (isPandigital(eval)) {
+				if (h.isPandigital(eval, usableNumbers)) {
 					System.out.println(eval);
 					results.add(mult);
 				}
@@ -103,27 +105,5 @@ public class ThirtyTwo {
 		System.out.println("Answer: " + sum);
 	}
 
-	// revice cleanup
-	private static boolean isPandigital(String string) {
-		if (string.length() == source.length() && !string.contains("0")) {
-			boolean[] b = new boolean[source.length()];
-			for (char c : string.toCharArray()) {
-				b[Integer.parseInt(c + "") - 1] = true;
-			}
-			return !(Arrays.toString(b)).contains("false");
-		}
-		return false;
-	}
-
-	static void permute(int level, String prefix, ArrayList<Integer> populate) {
-		// note for our problem we can exclude the ones that contain repeat
-		// numbers even though they will be filtered later on
-		if (level == 0) {
-			populate.add(Integer.parseInt(prefix));
-			return;
-		}
-		for (int i = 0; i < source.length(); i++)
-			permute(level - 1, prefix + source.charAt(i), populate);
-	}
 
 }
