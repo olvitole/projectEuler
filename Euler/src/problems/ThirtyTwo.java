@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class ThirtyTwo {
 
-	private static int digitLimit = 4;
 	private static ArrayList<Integer> oneDigit;
 	private static ArrayList<Integer> twoDigits;
 	private static ArrayList<Integer> threeDigits;
@@ -68,16 +67,14 @@ public class ThirtyTwo {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// main logic
+		// main logic can be factored more but its fine for testing
 
 		for (Integer two : twoDigits) {
 			for (Integer three : threeDigits) {
 				int mult = two * three;
-				// System.out.println("" + mult + two + three);
 				String eval = "" + mult + two + three;
 				if (isPandigital(eval)) {
 					System.out.println(eval);
@@ -89,7 +86,6 @@ public class ThirtyTwo {
 		for (Integer two : oneDigit) {
 			for (Integer three : fourDigits) {
 				int mult = two * three;
-				// System.out.println("" + mult + two + three);
 				String eval = "" + mult + two + three;
 				if (isPandigital(eval)) {
 					System.out.println(eval);
@@ -101,7 +97,6 @@ public class ThirtyTwo {
 		int sum = 0;
 
 		for (Integer rs : results) {
-			// System.out.println(rs);
 			sum += rs;
 		}
 
@@ -110,15 +105,11 @@ public class ThirtyTwo {
 
 	// revice cleanup
 	private static boolean isPandigital(String string) {
-		if (string.length() == oneDigit.size() && !string.contains("0")) {
-			//System.out.println(string);
-			boolean[] b = new boolean[oneDigit.size()];
-			//System.out.println(Arrays.toString(b));
+		if (string.length() == source.length() && !string.contains("0")) {
+			boolean[] b = new boolean[source.length()];
 			for (char c : string.toCharArray()) {
-				//System.out.println(Integer.parseInt(c + "") - 1);
 				b[Integer.parseInt(c + "") - 1] = true;
 			}
-			//System.out.println(Arrays.toString(b));
 			return !(Arrays.toString(b)).contains("false");
 		}
 		return false;
@@ -135,74 +126,4 @@ public class ThirtyTwo {
 			permute(level - 1, prefix + source.charAt(i), populate);
 	}
 
-	@Deprecated
-	private static class Pair {
-		private final List<Integer> result;
-		private final int index;
-
-		private Pair(List<Integer> result, int index) {
-			this.result = result;
-			this.index = index;
-		}
-
-		public List<Integer> getResult() {
-			return result;
-		}
-
-		public Integer getRslt() {
-			String temp = "0";
-			for (Integer a : result)
-				temp = temp + a;
-			return Integer.parseInt(temp);
-		}
-
-		public int getIndex() {
-			return index;
-		}
-	}
-
-	@Deprecated
-	private static void foo(List<Integer> items) {
-		Queue<Pair> queue = new LinkedList<Pair>();
-		queue.add(new Pair(Collections.<Integer> emptyList(), 0));
-
-		while (!queue.isEmpty()) {
-			Pair pair = queue.poll();
-
-			System.err.println(pair.getRslt());
-			if (2 == ("0" + pair.getRslt()).length())
-				twoDigits.add(pair.getRslt());
-			if (3 == ("0" + pair.getRslt()).length())
-				threeDigits.add(pair.getRslt());
-			if (4 == ("0" + pair.getRslt()).length())
-				fourDigits.add(pair.getRslt());
-			if (pair.getResult().size() < digitLimit) {
-				for (int i = pair.getIndex(); i < items.size(); ++i) {
-					List<Integer> copy = new LinkedList<Integer>(pair.getResult());
-					copy.add(items.get(i));
-					queue.add(new Pair(copy, i + 1));
-				}
-			}
-		}
-	}
-
-	@Deprecated
-	void comb(int... items) {
-		Arrays.sort(items);
-		for (int k = 1; k <= items.length; k++) {
-			kcomb(items, 0, k, new int[k]);
-		}
-	}
-
-	@Deprecated
-	private void kcomb(int[] items, int n, int k, int[] arr) {
-		if (k == 0) {
-			System.out.println(Arrays.toString(arr));
-		} else {
-			for (int i = n; i <= items.length - k; i++) {
-				arr[arr.length - k] = items[i];
-				kcomb(items, i + 1, k - 1, arr);
-			}
-		}
-	}
 }
